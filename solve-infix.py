@@ -4,28 +4,49 @@ def infixToPostfix(expression):
         tokens = expression.split()
 
         # output will be a postfix expression in a list for now.
-        output = []
-        opStack = []
+        output = [] # like a queue
+        stack = []
         operators = {"+":1, "-":1, "*":2, "/":2}
 
         for token in tokens:
                 print(f"token: {token}")
                 if token.isnumeric():
                         output.append(token)
+                elif token == '(':
+                        # put opening bracket on the stack
+                        stack.append(token)
+                elif token == ')':
+                        # if we get a closing bracket, pop everything from the stack until we get to the opening bracket.
+                        while stack and stack[-1] != '(':
+                                output.append(stack.pop())
+                        # pop the opening bracket
+                        stack.pop()
                 else:
                         # token is an operator
-                        while opStack and operators[opStack[-1]] <= operators[token]:
+                        while stack and operators.get(stack[-1], 0) >= operators.get(token, 0):
                                 # While there is something on the stack and the precedence of the operator on top of the stack
                                 # is less than the operator we are currently looking at, pop from the stack onto the output.
-                                output.append(opStack.pop())
+                                output.append(stack.pop())
                         # always put the current operator on the stack.
-                        opStack.append(token)
+                        stack.append(token)
+                print(output)
+                print(stack)
 
-        while opStack:
-                output.append(opStack.pop())
+        while stack:
+                output.append(stack.pop())
         return output
 
 
-a = infixToPostfix("1 + 2")
-print(a)
+#a = infixToPostfix("1 + 2")
+#b = infixToPostfix("1 + 2 * 3")
+c = infixToPostfix("( 1 + 2 ) * 3")
+
+print(c)
+
+
+
+
+
+
+
 
