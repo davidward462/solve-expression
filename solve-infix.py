@@ -1,3 +1,5 @@
+import pytest
+
 def infixToPostfix(expression):
         # Take an expression in the form of a string, where tokens are separated by spaces.
         # This way we can deal with multidigit numbers without writing a tokenizer yet.
@@ -34,19 +36,21 @@ def infixToPostfix(expression):
 
         while stack:
                 output.append(stack.pop())
-        return output
+
+        joined = joinList(output)
+        print(joined)
+        return joined
+
+def joinList(l):
+        return ' '.join(l)
+
+@pytest.mark.parametrize("expression, expected", [
+        ("1 + 2", "1 2 +"),
+        ("1 + 2 * 3", "1 2 3 * +"),
+        ("( 1 + 2 ) * 3", "1 2 + 3 *")
+])
 
 
-#a = infixToPostfix("1 + 2")
-#b = infixToPostfix("1 + 2 * 3")
-c = infixToPostfix("( 1 + 2 ) * 3")
-
-print(c)
-
-
-
-
-
-
-
+def test_infixToPostfix(expression, expected):
+        assert infixToPostfix(expression) == expected
 
