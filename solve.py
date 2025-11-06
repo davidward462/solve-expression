@@ -59,9 +59,12 @@ def solvePostfix(expression):
                                 case "*":
                                         stack.append(a * b)
                                 case "/":
-                                        stack.append(a / b)
+                                        try:
+                                                stack.append(a / b)
+                                        except ZeroDivisionError as e:
+                                                print("Error: Division by zero")
+                                                return None
         return stack[-1]
 
 def solveExpression(expr):
         return solvePostfix(infixToPostfix(expr))
-
