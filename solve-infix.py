@@ -62,12 +62,7 @@ def solvePostfix(expression):
                                         stack.append(a * b)
                                 case "/":
                                         stack.append(a / b)
-
-                                        # truncate towards zero
-                                        #stack.append(int(a / b))
-        result = stack[-1]
-        print(f"{expression} = {result}")
-        return result
+        return stack[-1]
 
 def joinList(l):
         return ' '.join(l)
