@@ -61,17 +61,21 @@ def solvePostfix(expression):
                                 case "*":
                                         stack.append(a * b)
                                 case "/":
+                                        stack.append(a / b)
+
                                         # truncate towards zero
-                                        stack.append(int(a / b))
-        return stack[-1]
+                                        #stack.append(int(a / b))
+        result = stack[-1]
+        print(f"{expression} = {result}")
+        return result
 
 def joinList(l):
         return ' '.join(l)
 
-def solve(expression):
-        return solvePostfix(infixToPostfix(expression))
+def solve(expr):
+        return solvePostfix(infixToPostfix(expr))
 
-@pytest.mark.parametrize("expression, expected", [
+@pytest.mark.parametrize("expr, result", [
         ("1 + 2", "1 2 +"),
         ("1 + 2 * 3", "1 2 3 * +"),
         ("( 1 + 2 ) * 3", "1 2 + 3 *"),
@@ -81,21 +85,25 @@ def solve(expression):
         ("1000", "1000")
         ])
 
-def test_infixToPostfix(expression, expected):
-        assert infixToPostfix(expression) == expected
+def test_infixToPostfix(expr, result):
+        assert infixToPostfix(expr) == result
 
 
-@pytest.mark.parametrize("expr, expt", [
+@pytest.mark.parametrize("expr, result", [
         ("1 2 +", 3)
         ])
 
-def test_solvePostfix(expr, expt):
-        assert solvePostfix(expr) == expt
+def test_solvePostfix(expr, result):
+        assert solvePostfix(expr) == result
 
-
-@pytest.mark.parametrize("expression, expected", [
-        ("1 + 1", 2)
+@pytest.mark.parametrize("expr, result", [
+        ("1 + 1", 2),
+        (" 4 / 2", 2),
+        (" 5 / 2", 2.5),
+        ("10 / 3", (10/3)),
+        ("( 1024 / 8 ) + 1", 129),
+        ("1000000000", 1000000000)
         ])
 
-def test_solve(expression, expected):
-        assert solve(expression) == expected
+def test_solve(expr, result):
+        assert solve(expr) == result
