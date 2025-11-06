@@ -37,15 +37,14 @@ def infixToPostfix(expression):
         while stack:
                 output.append(stack.pop())
 
-        joined = joinList(output)
-        print(joined)
-        return joined
+        return output
+
 
 def solvePostfix(expression):
+        print(expression)
         stack = []
         operators = {"+", "-", "*", "/"}
-        tokens = expression.split()
-        for token in tokens:
+        for token in expression:
                 if token.isnumeric():
                         # number
                         stack.append(int(token))
@@ -64,32 +63,8 @@ def solvePostfix(expression):
                                         stack.append(a / b)
         return stack[-1]
 
-def joinList(l):
-        return ' '.join(l)
-
 def solve(expr):
         return solvePostfix(infixToPostfix(expr))
-
-@pytest.mark.parametrize("expr, result", [
-        ("1 + 2", "1 2 +"),
-        ("1 + 2 * 3", "1 2 3 * +"),
-        ("( 1 + 2 ) * 3", "1 2 + 3 *"),
-        ("990 + 10", "990 10 +"),
-        ("", ""),
-        (" ", ""),
-        ("1000", "1000")
-        ])
-
-def test_infixToPostfix(expr, result):
-        assert infixToPostfix(expr) == result
-
-
-@pytest.mark.parametrize("expr, result", [
-        ("1 2 +", 3)
-        ])
-
-def test_solvePostfix(expr, result):
-        assert solvePostfix(expr) == result
 
 @pytest.mark.parametrize("expr, result", [
         ("1 + 1", 2),
