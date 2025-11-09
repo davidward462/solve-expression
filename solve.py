@@ -2,6 +2,11 @@ import sys
 
 def infixToPostfix(expression):
         # Take an expression in the form of a string, where tokens are separated by spaces.
+
+        if not expression:
+                # if the expression is an empty string, return None. This means no operations will take place.
+                return None
+
         # This way we can deal with multidigit numbers without writing a tokenizer yet.
         tokens = expression.split()
 
@@ -42,6 +47,11 @@ def infixToPostfix(expression):
 
 def solvePostfix(expression):
         #print(expression)
+
+        # if the input is None, don't do any operations.
+        if not expression:
+                return None
+
         stack = []
         operators = {"+", "-", "*", "/"}
         for token in expression:
@@ -65,12 +75,14 @@ def solvePostfix(expression):
                                         except ZeroDivisionError as e:
                                                 print("Error: Division by zero")
                                                 return None
+                                case _:
+                                        # TODO: An illegal operator embedded in a large expression causes a stack erorr.
+                                        print(f"Error: Unknown operator {token}")
+                                        return None
         return stack[-1]
 
 def solveExpression(expr):
         return solvePostfix(infixToPostfix(expr))
-
-
 
 if __name__ == "__main__":
         '''
@@ -82,4 +94,5 @@ if __name__ == "__main__":
         if len(sys.argv) > 1:
                 expr = sys.argv[1]
                 result = solveExpression(expr)
-                print(result)
+                if result:
+                        print(result)
