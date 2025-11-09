@@ -1,3 +1,4 @@
+import sys
 
 def infixToPostfix(expression):
         # Take an expression in the form of a string, where tokens are separated by spaces.
@@ -10,7 +11,7 @@ def infixToPostfix(expression):
         operators = {"+":1, "-":1, "*":2, "/":2}
 
         for token in tokens:
-                print(f"token: {token}")
+                #print(f"token: {token}")
                 if token.isnumeric():
                         output.append(token)
                 elif token == '(':
@@ -30,8 +31,8 @@ def infixToPostfix(expression):
                                 output.append(stack.pop())
                         # always put the current operator on the stack.
                         stack.append(token)
-                print(output)
-                print(stack)
+                #print(output)
+                #print(stack)
 
         while stack:
                 output.append(stack.pop())
@@ -40,7 +41,7 @@ def infixToPostfix(expression):
 
 
 def solvePostfix(expression):
-        print(expression)
+        #print(expression)
         stack = []
         operators = {"+", "-", "*", "/"}
         for token in expression:
@@ -68,3 +69,17 @@ def solvePostfix(expression):
 
 def solveExpression(expr):
         return solvePostfix(infixToPostfix(expr))
+
+
+
+if __name__ == "__main__":
+        '''
+        print("Total arguments:", len(sys.argv))
+        print("Script name:", sys.argv[0])
+        print("Arguments:", sys.argv[1:])
+        '''
+
+        if len(sys.argv) > 1:
+                expr = sys.argv[1]
+                result = solveExpression(expr)
+                print(result)
